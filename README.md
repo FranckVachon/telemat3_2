@@ -7,6 +7,8 @@ Quelques notes:
 * Par défaut, le serveur TCP écoute sous le port 8000/[endpoints]
 * L'écoute pour UDP se fait sur le port 8001
 * Le serveur roule sur localhost
+* Le client UDP peut prendre 1 paramètres (optionel), le numéro de port UDP si celui-ci est différent de 8001
+* Le serveur peut prendre 1 ou 2 paramètres (optionel), le numéro de port UDP et le numéro de port TCP si on veut utiliser autre chose que 8001 et 8000, respectivement (voir commands de lancement ci-bas)
 
 ### Exporter un exécutable (.jar) sous Éclipse
 
@@ -43,6 +45,13 @@ fasdfasdf
 Msg origine: ID:99 author:999 salleId:1 fasdfasdf
 From server:ID:99 author:999 salleId:1 fasdfasdf
 ```
+#### Autre configurations de lancement
+Par défaut UDP == port 8001 et TCP == port 8000. Cependant, des arguments optionels peuvent être fournis lors du lancement (ligne de commande ou dans les run configuration de Eclipse):
+
+* Client: **java -jar client.java [port UDP]**
+* Serveur: **java -jar server.java [port UDP] [port TCP]**
+
+**Même port UDP nécessaire entre client-serveur!**
 
 ### Usage port TCP (creation salle, usagers, etc.)
 Structure générale: 
@@ -74,4 +83,4 @@ http://localhost:8000/suscribeUsagerSalle?userId=0&salleId=1
 http://localhost:8000/suscribeUsagerSalle?userId=1&salleId=1
 ```
 ## Erreurs connues:
-* Si le serveur n'est pas fermé proprement, il ne sera pas possible de re-démarrer le serveur sur le même port. Une erreur de type **Exception in thread "main" java.net.BindException: Address already in use** . Il faut alors arrêter le processus correspondant sur votre système (e.g. gestionnaire de tâches).
+* Si le serveur n'est pas fermé proprement, il ne sera pas possible de re-démarrer le serveur sur le même port. Une erreur de type **Exception in thread "main" java.net.BindException: Address already in use** . Il faut alors arrêter le processus correspondant sur votre système (e.g. gestionnaire de tâches). Ou alors choisir un autre port pour démarrer l'application (avec argumenrs optionels comme ci-haut).
