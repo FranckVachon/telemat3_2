@@ -16,13 +16,14 @@ public class SocketUDP extends Thread {
     protected SocketTCP socketTCP;
 
     public SocketUDP() throws IOException {
-	this("simpleudpserver");
+	this("simpleudpserver", Utils.udpPort, Utils.tcpPort);
     }
 
-    public SocketUDP(String name) throws IOException {
+    public SocketUDP(String name, int portServerUDP, int portServerTCP) throws IOException {
         super(name);
+        port = portServerUDP;
         udpsocket = new DatagramSocket(port);
-        socketTCP = SocketTCP.getInstance("dummy");
+        socketTCP = SocketTCP.getInstance("dummy", portServerUDP, portServerTCP);
         System.out.println("udpserver on port:"+ port);
     }
     

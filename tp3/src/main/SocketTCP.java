@@ -26,10 +26,10 @@ public class SocketTCP extends Thread {
 	
 	//###########################TODO: Throw away code - surtout pour la démo pas super pertinent comme structure
 	private static SocketTCP instance;
-	public static SocketTCP getInstance(String name) throws IOException {
+	public static SocketTCP getInstance(String name, int portUDP, int portTCP) throws IOException {
 		//Probablement destiné à partir, mais pour démo ça va
 		if (instance==null) {
-			instance = new SocketTCP(name);
+			instance = new SocketTCP(name, portTCP);
 			return instance;
 		}
 		return instance;
@@ -75,8 +75,9 @@ public class SocketTCP extends Thread {
 	private List<Salle> salles = new ArrayList<>();
 	private List<User> usagers = new ArrayList<>();
 
-	private SocketTCP(String name) throws IOException {
+	private SocketTCP(String name, int portTCP) throws IOException {
 		super(name);
+		inetSocketPort = portTCP;
 		server = HttpServer.create(new InetSocketAddress(inetSocketPort), serverIP);
 		System.out.println("server:" + super.getName() + " on port:" + inetSocketPort);
 	}

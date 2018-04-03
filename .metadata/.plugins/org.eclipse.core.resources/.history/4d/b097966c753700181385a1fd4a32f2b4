@@ -1,0 +1,21 @@
+package client;
+import coms.Utils;
+
+
+public final class MainClientUDP {
+	
+    public static void main(String[] args) {	
+    	
+    	if (args[0]!=null) {
+			
+		} 
+    	
+    	new ClientUDP().start();
+
+    }
+
+    
+}
+
+
+

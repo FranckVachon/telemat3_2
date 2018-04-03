@@ -2,15 +2,26 @@
 <section name="Workbench">
 	<item value="JavaSE-9" key="org.eclipse.jdt.ui.last.selected.execution.enviroment"/>
 	<item value="0" key="org.eclipse.jdt.ui.last.selected.jre.kind2"/>
+	<section name="RefactoringWizard.preview">
+		<item value="600" key="width"/>
+		<item value="400" key="height"/>
+	</section>
+	<section name="org.eclipse.ltk.ui.refactoring.settings">
+		<item value="false" key="updateQualifiedNames"/>
+		<item value="*" key="patterns"/>
+		<item value="false" key="updateSimilarElements"/>
+		<item value="1" key="updateSimilarElementsMatchStrategy"/>
+		<item value="false" key="updateTextualMatches"/>
+	</section>
 	<section name="FatJarPackageWizard">
 		<item value="/home/anonymous/Documents/hiver2018/585ift/moreeclipsshit" key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION"/>
-		<item value="MainServer - tp3" key="FatJarPackageWizardPage.LAUNCH_CONFIGURATION_SELECTION_NAME"/>
-		<item value="/home/anonymous/Documents/TODELETE/testClientServer/server.jar" key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION"/>
+		<item value="MainClientUDP - clientUDP" key="FatJarPackageWizardPage.LAUNCH_CONFIGURATION_SELECTION_NAME"/>
+		<item value="/home/anonymous/Documents/TODELETE/testClientServer/client.jar" key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION"/>
 		<item value="false" key="FatJarPackageWizardPage.ANTSCRIPT_SAVE"/>
 		<item value="1" key="FatJarPackageWizardPage.LIBRARY_HANDLING"/>
 		<list key="FatJarPackageWizardPage.DESTINATION_NAMES_ID">
-			<item value="/home/anonymous/Documents/TODELETE/testClientServer/server.jar"/>
 			<item value="/home/anonymous/Documents/TODELETE/testClientServer/client.jar"/>
+			<item value="/home/anonymous/Documents/TODELETE/testClientServer/server.jar"/>
 			<item value="/home/anonymous/Documents/TODELETE/testClientServer/Untitled.jar"/>
 		</list>
 		<list key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION_HISTORY">

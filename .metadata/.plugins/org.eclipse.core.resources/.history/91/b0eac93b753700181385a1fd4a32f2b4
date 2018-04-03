@@ -1,0 +1,16 @@
+package client;
+
+
+public final class MainClientUDP {
+	
+    public static void main(String[] args) {	
+    	
+    	new ClientUDP().start();
+
+    }
+
+    
+}
+
+
+

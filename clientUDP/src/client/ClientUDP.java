@@ -15,6 +15,11 @@ public class ClientUDP extends Thread {
 	int msgId=99;
 	int port = Utils.udpPort;
 
+	public ClientUDP(int portServerUDP) {
+		port = portServerUDP;
+	}
+
+
 	public void run() {
 		//Pour tests
 		this.userId = userId;
