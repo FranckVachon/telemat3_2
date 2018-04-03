@@ -18,7 +18,7 @@
 		<link>
 			<name>commons</name>
 			<type>2</type>
-			<location>/home/anonymous/Documents/hiver2018/585ift/tp3all/commons</location>
+			<locationURI>$%7BPARENT-1-PROJECT_LOC%7D/commons</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
