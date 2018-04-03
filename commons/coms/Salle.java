@@ -10,17 +10,16 @@ public class Salle implements Subject {
 	
 	String salleNom;
 	int id;
-	int likeCount;
-	int dislikeCount;
+	//List des abonnés à cette salle
 	private List<Observer> suscribersSalle = new ArrayList<>();
+	//List des messages postés dans cette salle (e.g. archives en quelques sortes)
 	private List<Messge> messages = new ArrayList<>();
 
 	//Constructeur pour reconstituer une salle déjà en mémoire
 	public Salle(String salleNom, int id, int likeCount, int dislikeCount, ArrayList<User> suscribersList, ArrayList<Messge> messagesList) {
 		this.salleNom = salleNom;
 		this.id = id;
-		this.dislikeCount = dislikeCount;
-		this.likeCount = likeCount;
+
 		
 	}
 	
@@ -28,8 +27,7 @@ public class Salle implements Subject {
 	public Salle(String salleNom, int id) {
 		this.salleNom = salleNom;
 		this.id = id;
-		this.dislikeCount = 0;
-		this.likeCount = 0;
+
 	}
 
 	
@@ -64,21 +62,6 @@ public class Salle implements Subject {
 		this.id = id;
 	}
 
-	public int getLikeCount() {
-		return likeCount;
-	}
-
-	public void setLikeCount(int likeCount) {
-		this.likeCount = likeCount;
-	}
-
-	public int getDislikeCount() {
-		return dislikeCount;
-	}
-
-	public void setDislikeCount(int dislikeCount) {
-		this.dislikeCount = dislikeCount;
-	}
 
 	@Override
 	public void attachObserver(Observer o) {

@@ -10,6 +10,7 @@ public final class MainClientUDP {
     		portServerUDP = Integer.parseInt(args[0]);
 		} 
     	
+    	System.out.println("Démarrage client UDP. PortUDP (serveur):" + portServerUDP);
     	new ClientUDP(portServerUDP).start();
 
     }

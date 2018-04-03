@@ -24,7 +24,7 @@ import observerPattern.Subject;
 
 public class SocketTCP extends Thread {
 	
-	//###########################TODO: Throw away code - surtout pour la démo pas super pertinent comme structure
+	//############## Gestion du singleton
 	private static SocketTCP instance;
 	public static SocketTCP getInstance(String name, int portUDP, int portTCP) throws IOException {
 		//Probablement destiné à partir, mais pour démo ça va
@@ -34,19 +34,6 @@ public class SocketTCP extends Thread {
 		}
 		return instance;
 	}
-	
-	public void addMsgSalle(Messge msg) {
-		//Méthode qui pourrait être conservée - mais est-ce la job du socket TCPT d'ajouter un nouveau msg 
-		//à une salle, ou bien est-ce que ce code va ailleurs... à voir.
-		//Je voulais surtout pour l'ajouter rapidement et facilement pour avoir un prototype de départ...
-		int idSalle = msg.getSalleId();
-		for (Salle s: salles) {
-			if (s.getId() == idSalle) {
-				s.addNewMessage(msg);
-			}
-		}
-	}
-	//############################### FIN throw-away code
 	
 
 	// ####################### endpoint et params  ##########
@@ -64,16 +51,20 @@ public class SocketTCP extends Thread {
 	private static String suscribeUsagerURI = "/suscribeUsagerSalle";
 	private static String usagerIdParam = "userId";
 	private static String salleIdParam = "salleId";
+	//TODO: Ajouter nouveau Endpoints si nécessaire ICI
+
 	// ####################### FIND endpoint et param ###########
 
 	// ####################### Serveur addresse & port
 	private HttpServer server = null;
-	private static int serverIP = 0; // Pour l'instant - roule en localhost
+	private static int serverIP = 0; // roule en localhost
 	private static int inetSocketPort = 8000;
+	// ####################### FIN Serveur addresse & port
 
 	// ####################### Listes pour gestion des objets/entités
 	private List<Salle> salles = new ArrayList<>();
 	private List<User> usagers = new ArrayList<>();
+	// ####################### FIN Listes obj
 
 	private SocketTCP(String name, int portTCP) throws IOException {
 		super(name);
@@ -83,7 +74,8 @@ public class SocketTCP extends Thread {
 	}
 	
 	public void run() {
-		// CREATION des contextes
+		// CREATION des contextes - si de nouveaux endpoint sont ajouteré, créer les contextes ici
+		//et écrire le handler correspondant plus bas
 		server.createContext(creationSalleURI, new CreationSalleHandler());
 		server.createContext(creationUsagerURI, new CreationUsagerHandler());
 		server.createContext(suscribeUsagerURI, new SuscribeUsagerHandler());
@@ -93,7 +85,7 @@ public class SocketTCP extends Thread {
 	}
 
 	//###################### HANDLERS pour endpoints ##################################
-	//Chaque handler a une section surtout destinée à printer à la console pas super utile long terme, surtout pour démo/test
+	//Chaque handler a une section PRINT, surtout pour afficher à la console pour debug... voir si utile long terme ou non
 	//la logique de réponse au browser est probablement pertinente par contre
 	
 	class CreationSalleHandler implements HttpHandler {
@@ -106,7 +98,9 @@ public class SocketTCP extends Thread {
 			Map<String, String> params = parseQueryString(t.getRequestURI().getQuery());
 
 			// Creer la nouvelle salle 
-			attachSalle(new Salle(params.get(salleNomParam), getSalleCount()));
+			//Le ID de la salle devient simplement le nombre de salle, getSalleCount()
+			//initSalle pour l'instant ne fait que l'ajouter à la liste des salle
+			initSalle(new Salle(params.get(salleNomParam), getSalleCount()));
 
 		
 			// #######################BEGIN DEBUG PRINT
@@ -127,12 +121,11 @@ public class SocketTCP extends Thread {
 		/* Gérer la création d'une nouvel usager */
 		@Override
 		public void handle(HttpExchange t) throws IOException {
-			// localhost:inetSocketPort/creationUsager?username=billybob&password=secrepass
-
+			
 			Map<String, String> params = parseQueryString(t.getRequestURI().getQuery());
 
 			// Creer nouvel usager & attacher au observer pattern
-			attachUsager(new User(params.get(usagerNomParam), params.get(usagerPasswordParam), getUserCount()));
+			initUsager(new User(params.get(usagerNomParam), params.get(usagerPasswordParam), getUserCount()));
 
 			// #######################BEGIN DEBUG PRINT
 			String lineREturn = System.lineSeparator();
@@ -150,7 +143,6 @@ public class SocketTCP extends Thread {
 	}
 
 	class SuscribeUsagerHandler implements HttpHandler {
-		// localhost:inetSocketPort/suscribeUsagerSalle?userId=1&salleId=01
 		public void handle(HttpExchange t) throws IOException {
 
 			Map<String, String> params = parseQueryString(t.getRequestURI().getQuery());
@@ -183,7 +175,7 @@ public class SocketTCP extends Thread {
 			// ################### END DEBUG PRINT
 		}
 		
-		//###################### HANDLERS pour endpoints ##################################
+		//###################### FIN HANDLERS pour endpoints ##################################
 
 
 		private List<Object> findObjectsFromIds(String salleId, String userId) {
@@ -191,7 +183,7 @@ public class SocketTCP extends Thread {
 			 * Matches the id provided (strings) to corresponding obj. No check for
 			 * existence
 			 */
-			// TODO: checker pour non-existence d'un obj correspondant au ID et gérer ce cas
+			// TODO: checker pour non-existence d'un obj correspondant au ID et gérer ce cas?
 			List<Object> obj = new ArrayList<>();
 			for (Salle s : getSalles()) {
 				if (Integer.toString(s.getId()).equals(salleId)) {
@@ -229,7 +221,7 @@ public class SocketTCP extends Thread {
 	public Map<String, String> parseQueryString(String qs) {
 		/**
 		 * Prends en entrée un string, qui represente l'ensemble de la query qui a été
-		 * envoyé au serveur En extrait les params avec "&" et les fous dans un hashmap
+		 * envoyée au serveur En extrait les params avec "&" et les fous dans un hashmap
 		 * Thanks to "Oliv" from stack overflow question #11640025 for code snippet
 		 */
 		Map<String, String> result = new HashMap<>();
@@ -258,12 +250,25 @@ public class SocketTCP extends Thread {
 		}
 		return result;
 	}
+	
+	public void addMsgSalle(Messge msg) {
+		//Méthode initiale pour ajouter un message à une salle
+		int idSalle = msg.getSalleId();
+		for (Salle s: salles) {
+			if (s.getId() == idSalle) {
+				s.addNewMessage(msg);
+			}
+		}
+	}
 
-	public void attachSalle(Salle s) {
+
+	public void initSalle(Salle s) {
+		/*Ajouter une salle à sa liste, possiblement d'autres opérations pertinentes lors de la création*/
 		salles.add(s);
 	}
 
-	public void attachUsager(User u) {
+	public void initUsager(User u) {
+		/*Ajouter une usager à sa liste, possiblement d'autres opérations pertinentes lors de la création*/
 		usagers.add(u);
 	}
 

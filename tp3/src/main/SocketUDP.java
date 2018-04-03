@@ -6,18 +6,13 @@ import coms.Messge;
 import coms.Utils;
 
 public class SocketUDP extends Thread {
-	/*Simple pair client/server en UDP. LE server (qui n'Est pour l'instant pas plus qu'un socket)
-	 * écoute sur Utils.port (8000 par défaut).
+	/*Simple socketUDP. Port selon Utils.udpPort ou argument en ligne de commande si donné
 	 * */
 	
 	protected int port = Utils.udpPort;
     protected DatagramSocket udpsocket = null;
     protected BufferedReader in = null;
     protected SocketTCP socketTCP;
-
-    public SocketUDP() throws IOException {
-	this("simpleudpserver", Utils.udpPort, Utils.tcpPort);
-    }
 
     public SocketUDP(String name, int portServerUDP, int portServerTCP) throws IOException {
         super(name);
@@ -53,7 +48,7 @@ public class SocketUDP extends Thread {
                 
                 // renvoyer une réponse au client - la même chose qu'il nous a envoyé
                 InetAddress address = inPacket.getAddress();
-                int port = inPacket.getPort();
+                int port = inPacket.getPort();	//e.g. le port sur lequel le client attend un éventuelle réponse
                 DatagramPacket outPacket = new DatagramPacket(buf, buf.length, address, port);
                 udpsocket.send(outPacket);
                 

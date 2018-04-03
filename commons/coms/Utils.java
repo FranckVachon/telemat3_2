@@ -5,7 +5,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 public class Utils {
-	//Params connection
+	//Params connection par défaut - seront utilisés si rien n'est passé en argument à la ligne de cmd
 	public static String serverName = "localhost";
 	public static int tcpPort = 8000;
 	public static int udpPort = 8001;

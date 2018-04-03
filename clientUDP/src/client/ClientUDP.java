@@ -21,8 +21,6 @@ public class ClientUDP extends Thread {
 
 
 	public void run() {
-		//Pour tests
-		this.userId = userId;
 		
 		//Définit un socket, 
 		DatagramSocket socket = null;

@@ -29,7 +29,7 @@ public class Messge {
 		int limit2 = Utils.authorIdBytes + Utils.messageIdBytes;
 		int limit3 = Utils.authorIdBytes + Utils.messageIdBytes + Utils.salleIdBytes;
 		
-		//Casser le byte[] en plusieurs sous-byte[] et parser en INt, String.
+		//Casser le byte[] en plusieurs sous-byte[] et parser en int, String.
 		this.id = Utils.bytesToInt(Arrays.copyOfRange(by, 0, limit1));
 		this.userId= Utils.bytesToInt(Arrays.copyOfRange(by, limit1, limit2));
 		this.salleId = Utils.bytesToInt(Arrays.copyOfRange(by, limit2, limit3));
@@ -46,7 +46,8 @@ public class Messge {
 	}
 	
 	public byte[] merge4Arrays(byte[] a, byte[] b,byte[] c,byte[] d) throws IOException {
-		/*Un peu paresseux, devrait être itératif pour être plus général... si on change pas les headers c'Est ok*/
+		/*Un peu paresseux, devrait être itératif pour être plus général... si on change pas les headers c'Est ok
+		 * Sinon faudrait ajouter des outputStream.write() si on veut plus de 4 arguemnts*/
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream( );
 		outputStream.write( a );
 		outputStream.write( b );
