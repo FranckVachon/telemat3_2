@@ -45,6 +45,9 @@ fasdfasdf
 Msg origine: ID:99 author:999 salleId:1 fasdfasdf
 From server:ID:99 author:999 salleId:1 fasdfasdf
 ```
+
+Les consoles print à l'écran ce qui se produit pour donner une idée des processus et vérifier si l'information voyage effectivement.
+
 #### Autre configurations de lancement
 Par défaut UDP == port 8001 et TCP == port 8000. Cependant, des arguments optionels peuvent être fournis lors du lancement (ligne de commande ou dans les run configuration de Eclipse):
 
